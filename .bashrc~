@@ -1,0 +1,23 @@
+# .bashrc
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi
+
+# Uncomment the following line if you don't like systemctl's auto-paging feature:
+# export SYSTEMD_PAGER=
+
+set -o vi
+# User specific aliases and functions
+export PS1='\W \$ '
+alias matlab="matlab -nodesktop -nosplash"
+if [ -e /usr/bin/vimx ]; then alias vim="/usr/bin/vimx"; fi
+if [ -e /usr/bin/vim ]; then alias vi="/usr/bin/vimx"; fi
+alias view="vimx -R"
+export LD_LIBRARY_PATH=/home/bjanice/Projects/MOWI/txfilter
+export PYTHONPATH=/home/bjanice/scripts/lib/
+export SEGA_BLADE=AF77909-srv
+export SEGA_BLADE2=MM204768-blade2
+export SEGA_BLADE3=MM204768-blade3
+export SEGA_BLADE4=MM204768-blade4

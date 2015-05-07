@@ -1,0 +1,209 @@
+unbind-key -a
+bind-key        C-b send-prefix
+bind-key        C-o rotate-window
+bind-key        C-z suspend-client
+bind-key      Space next-layout
+bind-key          ! break-pane
+bind-key          '"' split-window
+bind-key          \# list-buffers
+bind-key          $ command-prompt -I #S "rename-session '%%'"
+bind-key          % split-window -h
+bind-key          & confirm-before -p "kill-window #W? (y/n)" kill-window
+bind-key          '''' command-prompt -p index "select-window -t ':%%'"
+bind-key          ( switch-client -p
+bind-key          ) switch-client -n
+bind-key          , command-prompt -I #W "rename-window '%%'"
+bind-key          - delete-buffer
+bind-key          . command-prompt "move-window -t '%%'"
+bind-key          0 select-window -t :0
+bind-key          1 select-window -t :1
+bind-key          2 select-window -t :2
+bind-key          3 select-window -t :3
+bind-key          4 select-window -t :4
+bind-key          5 select-window -t :5
+bind-key          6 select-window -t :6
+bind-key          7 select-window -t :7
+bind-key          8 select-window -t :8
+bind-key          9 select-window -t :9
+bind-key          : command-prompt
+bind-key          \; last-pane
+bind-key          = choose-buffer
+bind-key          ? list-keys
+bind-key          D choose-client
+bind-key          L switch-client -l
+bind-key          [ copy-mode
+bind-key          ] paste-buffer
+bind-key          c new-window
+bind-key          d detach-client
+bind-key          f command-prompt "find-window '%%'"
+bind-key          i display-message
+bind-key          l last-window
+bind-key          n next-window
+bind-key          o select-pane -t :.+
+bind-key          p previous-window
+bind-key          q display-panes
+bind-key          r refresh-client
+bind-key          s choose-tree
+bind-key          t clock-mode
+bind-key          w choose-window
+bind-key          x confirm-before -p "kill-pane #P? (y/n)" kill-pane
+bind-key          z resize-pane -Z
+bind-key          { swap-pane -U
+bind-key          } swap-pane -D
+bind-key          ~ show-messages
+bind-key      PPage copy-mode -u
+bind-key -r      Up select-pane -U
+bind-key -r    Down select-pane -D
+bind-key -r    Left select-pane -L
+bind-key -r   Right select-pane -R
+bind-key        M-1 select-layout even-horizontal
+bind-key        M-2 select-layout even-vertical
+bind-key        M-3 select-layout main-horizontal
+bind-key        M-4 select-layout main-vertical
+bind-key        M-5 select-layout tiled
+bind-key        M-n next-window -a
+bind-key        M-o rotate-window -D
+bind-key        M-p previous-window -a
+bind-key -r    M-Up resize-pane -U 5
+bind-key -r  M-Down resize-pane -D 5
+bind-key -r  M-Left resize-pane -L 5
+bind-key -r M-Right resize-pane -R 5
+bind-key -r    C-Up resize-pane -U
+bind-key -r  C-Down resize-pane -D
+bind-key -r  C-Left resize-pane -L
+bind-key -r C-Right resize-pane -R
+set -g buffer-limit 20
+set -g escape-time 500
+set -g exit-unattached off
+set -g focus-events off
+set -g quiet off
+set -g set-clipboard on
+set -g assume-paste-time 1
+set -g base-index 0
+set -g bell-action any
+set -g bell-on-alert off
+set -g default-command ""
+set -g default-shell "/usr/bin/bash"
+set -g default-terminal "screen"
+set -g destroy-unattached off
+set -g detach-on-destroy on
+set -g display-panes-active-colour red
+set -g display-panes-colour blue
+set -g display-panes-time 1000
+set -g display-time 750
+set -g history-limit 2000
+set -g lock-after-time 0
+set -g lock-command "lock -np"
+set -g lock-server on
+set -g message-attr none
+set -g message-bg yellow
+set -g message-command-attr none
+set -g message-command-bg black
+set -g message-command-fg yellow
+set -g message-command-style fg=yellow,bg=black
+set -g message-fg black
+set -g message-limit 20
+set -g message-style fg=black,bg=yellow
+set -g mouse-resize-pane off
+set -g mouse-select-pane off
+set -g mouse-select-window off
+set -g mouse-utf8 on
+setw -g pane-active-border-bg default
+setw -g pane-active-border-fg green
+setw -g pane-active-border-style fg=green
+setw -g pane-border-bg default
+setw -g pane-border-fg default
+setw -g pane-border-style default
+set -g prefix C-b
+set -g prefix2 none
+set -g renumber-windows off
+set -g repeat-time 500
+set -g set-remain-on-exit off
+set -g set-titles off
+set -g set-titles-string "#S:#I:#W - "#T""
+set -g status on
+set -g status-attr none
+set -g status-bg green
+set -g status-fg black
+set -g status-interval 15
+set -g status-justify left
+set -g status-keys vi
+set -g status-left "[#S]"
+set -g status-left-attr none
+set -g status-left-bg default
+set -g status-left-fg default
+set -g status-left-length 10
+set -g status-left-style default
+set -g status-position bottom
+set -g status-right ""#{=22:pane_title}" %H:%M %d-%b-%y"
+set -g status-right-attr none
+set -g status-right-bg default
+set -g status-right-fg default
+set -g status-right-length 40
+set -g status-right-style default
+set -g status-style fg=black,bg=green
+set -g status-utf8 on
+set -g terminal-overrides "*256col*:colors=256,xterm*:XT:Ms=\E]52;%p1%s;%p2%s\007:Cs=\E]12;%p1%s\007:Cr=\E]112\007:Ss=\E[%p1%d q:Se=\E[2 q,screen*:XT"
+set -g update-environment "DISPLAY SSH_ASKPASS SSH_AUTH_SOCK SSH_AGENT_PID SSH_CONNECTION WINDOWID XAUTHORITY"
+set -g visual-activity off
+set -g visual-bell off
+set -g visual-content off
+set -g visual-silence off
+set -g word-separators " -_@"
+setw -g aggressive-resize off
+setw -g allow-rename on
+setw -g alternate-screen on
+setw -g automatic-rename on
+setw -g automatic-rename-format "#{?pane_in_mode,[tmux],#{pane_current_command}}#{?pane_dead,[dead],}"
+setw -g c0-change-trigger 250
+setw -g c0-change-interval 100
+setw -g clock-mode-colour blue
+setw -g clock-mode-style 24
+setw -g force-height 0
+setw -g force-width 0
+setw -g main-pane-height 24
+setw -g main-pane-width 80
+setw -g mode-attr none
+setw -g mode-bg yellow
+setw -g mode-fg black
+setw -g mode-keys vi
+setw -g mode-mouse off
+setw -g mode-style fg=black,bg=yellow
+setw -g monitor-activity off
+setw -g monitor-content ""
+setw -g monitor-silence 0
+setw -g other-pane-height 0
+setw -g other-pane-width 0
+setw -g pane-base-index 0
+setw -g remain-on-exit off
+setw -g synchronize-panes off
+setw -g utf8 on
+setw -g window-status-activity-attr reverse
+setw -g window-status-activity-bg default
+setw -g window-status-activity-fg default
+setw -g window-status-activity-style reverse
+setw -g window-status-attr none
+setw -g window-status-bell-attr reverse
+setw -g window-status-bell-bg default
+setw -g window-status-bell-fg default
+setw -g window-status-bell-style reverse
+setw -g window-status-bg default
+setw -g window-status-content-attr reverse
+setw -g window-status-content-bg default
+setw -g window-status-content-fg default
+setw -g window-status-content-style reverse
+setw -g window-status-current-attr none
+setw -g window-status-current-bg default
+setw -g window-status-current-fg default
+setw -g window-status-current-format "#I:#W#F"
+setw -g window-status-current-style default
+setw -g window-status-fg default
+setw -g window-status-format "#I:#W#F"
+setw -g window-status-last-attr none
+setw -g window-status-last-bg default
+setw -g window-status-last-fg default
+setw -g window-status-last-style default
+setw -g window-status-separator " "
+setw -g window-status-style default
+setw -g wrap-search on
+setw -g xterm-keys off

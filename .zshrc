@@ -1,0 +1,128 @@
+HISTFILE=/home/bjanice/.zsh_history
+SAVEHIST=1000
+autoload promptinit && promptinit
+autoload compinit && compinit
+
+bindkey "^L" clear-screen
+bindkey -v # vi mode
+export KEYTIMEOUT=1 # make C-[ timeout 0.1 seconds for vi mode
+
+# set some options
+unsetopt correctall # this is apprently too strict for some people's likings?
+setopt correct	# autocorrect misspelled commands
+setopt noclobber # don't overwrite files with > redirect unless using >!
+setopt autopushd # automatically maintain a directory stack
+setopt completealiases # autocomplete aliases
+setopt histignoredups # don't log 2 commands in the history that are the same
+setopt inc_append_history # saves every command before it is executed
+setopt share_history # retreives the history file every time history is called
+
+# generic settings from bash
+alias matlab="matlab -nodesktop -nosplash"
+if [[ -e /usr/bin/vimx ]]; then alias vim="/usr/bin/vimx"; fi
+if [[ -e /usr/bin/vim ]]; then alias vi="/usr/bin/vimx"; fi
+alias view="vimx -R"
+export PYTHONPATH=/home/bjanice/scripts/lib/
+export EDITOR=/usr/bin/vimx
+export VISUAL=/usr/bin/vimx
+
+# command search with up/down arrows
+autoload -U up-line-or-beginning-search
+autoload -U down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey "^[[A" up-line-or-beginning-search # Up arrow searches history matches
+bindkey "^[[B" down-line-or-beginning-search # Down arrow searches history matches
+
+zstyle ':completion:*' menu select # autocomplete switches with arrow keys
+
+# make zsh autocomplete without being case-sensitive
+zstyle ':completion:*' completer _complete
+zstyle ':completion:*' matcher-list '' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' '+l:|=* r:|=*'
+
+# custom prompt (work in progress)
+vcscolor="%F{193}"			# version control system repo/branch/etc. colors
+dircolor="%F{195}"				# directory display color
+whoamicolor="%F{230}"		# user name color
+hostcolor="%F{217}"				# hostname color
+errcolor="%(?.%f%k.%F{250})"	# this returns one color for success and another for failure
+
+#autoload colors && colors # enable prompt colors
+
+#autoload vcs_info
+#zstyle ':vcs_info:*' enable git svn # enable git and svn shell displays
+#zstyle ':vcs_info:git*' formats "${vcscolor}%s %fin ${vcscolor}%r/.%f on branch ${vcscolor}%b %u%c" # Git repo display options
+
+#abbreviated_pwd() {
+#		pwdstr="$( pwd )"
+#		if [[ "${pwdstr}" = "/home/$( whoami )" ]]; then
+#			echo "~" && return
+#		else
+#			echo "${pwdstr##*/}" && return
+#		fi
+#		if [[ ${#pwdstr} -gt 25 ]]; then
+#			echo "...${pwdstr:(-22)}" && return
+#		fi
+#	}
+
+# these are functions to print version control system information of the pwd
+# this function displays the current branch of the vcs repo
+function vcsbranch() {
+		local vcsbranchstr
+		git branch > /dev/null 2> /dev/null &&\
+			vcsbranchstr="$( git rev-parse --abbrev-ref HEAD )" &&\
+			echo " ${errcolor}on ${vcscolor}${vcsbranchstr}" &&\
+			vcsbranchstr=" on ${vcsbranchstr}"&&\
+			return
+		svn info > /dev/null 2> /dev/null &&\
+			vcsbranchstr=${$( svn info | grep '^Repository Root' )##*/} &&\
+			echo " ${errcolor}on ${vcscolor}${vcsbranchstr}" &&\
+			vcsbranchstr=" on ${vcsbranchstr}"&&\
+			return
+	}
+# this function displays the name of the vcs repo
+function vcsrepo() {
+		local vcsrepostr
+		git branch > /dev/null 2> /dev/null &&\
+			vcsrepostr=${$( git rev-parse --show-toplevel 2> /dev/null )##*/} &&\
+			echo  "${vcsrepostr}" &&\
+			return
+		svn info > /dev/null 2> /dev/null &&\
+			vcsrepostr=${$( svn info | grep '^URL' )##*/} &&\
+			echo "${vcsrepostr}" &&\
+			return
+	}
+function vcsprompt() {
+		git branch > /dev/null 2> /dev/null &&\
+			# determine if there are unstaged changes
+			if [[ -n $(git diff --shortstat > /dev/null 2> /dev/null | tail -n1) ]] then;
+				echo '○' && return
+			# determine if there are uncommitted staged changes
+			elif [[ -n $( git diff --cached ) ]] then; # could also use --staged
+				echo '◒' && return
+			# the directory is clean
+			else
+				echo '●' && return
+			fi
+		svn info > /dev/null 2> /dev/null &&\
+			# determine if there are changes
+			if [[ -n $(svn status -q) ]] then;
+				echo '○' && return
+			else
+				echo '●' && return
+			fi
+			echo '-➤' && return
+	}
+
+# This command is run when you ender a directory
+#precmd() {
+#	vcsbranch > /dev/null
+#	vcsrepo > /dev/null
+#	}
+setopt prompt_subst # make the prompts do command substitution
+
+PS1='%(?.${nocolor}.${errcolor}).-[ '
+PS1="${PS1}"'${whoamicolor}%n ${errcolor}at ${hostcolor}%m ${errcolor}in ${dircolor}%.'
+PS1="${PS1}"'$( vcsbranch ) ${errcolor}]'
+PS1="${PS1}"'${prompt_newline}%k${errcolor}\`$( vcsprompt )%f%k '
+RPS1='${errcolor}[%!]${nocolor}'

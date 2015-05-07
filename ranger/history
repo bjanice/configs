@@ -1,0 +1,34 @@
+open_with libreoffice
+open_with vim
+3
+g2
+search Lin
+search jkkj
+search pdf
+open with evince
+;
+marks
+search .ranger
+search QRC
+search script
+open_with view
+open_with 
+open_with vimx
+set preview_images true
+search .config
+source 
+search zsh
+search zshrc
+delete
+search theme
+set border
+search config
+search ranger
+set draw_borders false
+set draw_borders true
+ll
+open_with vi
+
+search .m
+mkdir
+mkdir dted_jamming_model
